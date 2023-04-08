@@ -16,7 +16,7 @@ public class Recursion {
 		}
 		
 		
-		return factorial(value-1);
+		return value*factorial(value-1);
 		
 	}
 	
