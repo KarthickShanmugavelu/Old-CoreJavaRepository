@@ -3,11 +3,13 @@ package streams;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.IntSummaryStatistics;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -82,7 +84,27 @@ public class JavaStreamsHandsOn {
 	    Stream<String> ds = Files.lines(Paths.get("data.txt"));
 	    long count3 = ds.map(x->x.split(",")).filter(x->x.length>=3).filter(x-> Integer.parseInt(x[1])>15).count();
 	    System.out.println(count);
-
+	    
+	    System.out.println();
+	    Stream<String> streamsEx = Files.lines(Paths.get("data.txt"));
+	    Map<String,Integer> mapEx = new HashMap<>();
+	    mapEx=streamsEx.map(x->x.split(",")).filter(x->x.length==3).filter(x->Integer.parseInt(x[1])>15).collect(Collectors.toMap(x->x[0],x->Integer.parseInt(x[1])));
+	    for(Map.Entry<String,Integer> subMap:mapEx.entrySet()) {
+	    	System.out.println(subMap.getKey() + "->" + subMap.getValue());
+	    }
+	    
+	    //reduce method ex
+	    System.out.println();
+	    double sum = Stream.of(7.3,6.5,7.78,9.9).reduce(0.0,(Double a, Double c)->a+c);
+	    System.out.println(sum);
+	    
+	    System.out.println();
+	    IntSummaryStatistics summary = IntStream.of(12,45,67,34,36,56).summaryStatistics();
+	    System.out.println(summary);
+	    
+	    Integer[] arr1 = new Integer[] { 1, 9, 8, 7, 7, 8, 9 };
+	    List<Integer> obj2=Arrays.stream(arr1).distinct().collect(Collectors.toList());
+	    System.out.println("After removing duplicates: "+obj2);
 	}
 
 }
